@@ -116,19 +116,38 @@ fun String.findDateStrByRegexAndPrefix(prefix: String): List<String> {
 /**
  * 冒号分割字符串
  */
-fun String.splintLineByColon(vararg str: String): String {
-    val arr = this.split(*str)
-    println(arr)
-    val sb = StringBuilder()
-    println("原文：${this}")
-    arr.forEachIndexed { index, s ->
-        if(index > 0) {
-            sb.append(str[index - 1])
-            sb.append(s)
-            sb.append("\n")
+fun String.splintLineByColon(vararg delimiters: String): String {
+    // 找到每个分割符在输入字符串中的位置，并按顺序排序
+    val sortedDelimiters = delimiters.mapNotNull { delimiter ->
+        val index = this.indexOf(delimiter)
+        if (index != -1) delimiter to index else null
+    }.sortedBy { it.second }.map { it.first }
+
+    var remainingText = this
+    val result = StringBuilder()
+
+    for (delimiter in sortedDelimiters) {
+        val index = remainingText.indexOf(delimiter)
+
+        if (index != -1) {
+            // 追加分割符及其后内容
+            result.append(remainingText.substring(index, index + delimiter.length))
+
+            // 获取分割符后面的内容，直到下一个分割符或结尾
+            val rest = remainingText.substring(index + delimiter.length)
+            val nextIndex = sortedDelimiters.drop(sortedDelimiters.indexOf(delimiter) + 1)
+                .map { rest.indexOf(it) }
+                .filter { it != -1 }
+                .minOrNull() ?: rest.length
+
+            result.append(rest.substring(0, nextIndex)).append("\n")
+
+            // 更新remainingText为剩余部分
+            remainingText = rest.substring(nextIndex)
         }
     }
-    return sb.toString()
+
+    return result.toString().trim()
 }
 
 /**
