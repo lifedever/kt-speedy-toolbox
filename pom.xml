@@ -6,7 +6,7 @@
 
     <groupId>kt-speedy-toolbox</groupId>
     <artifactId>kt-speedy-toolbox</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <packaging>pom</packaging>
     <modules>
         <module>kt-speedy-util</module>

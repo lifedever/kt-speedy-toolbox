@@ -247,6 +247,15 @@ fun String.toDate(pattern: String): Date {
 
 fun String.toDate(): Date {
     val formats = listOf(
+        // 年月
+        "yyyy年M月",
+        "yyyy年MM月",
+        "yyyy-M",
+        "yyyy-MM",
+        "yyyy/M",
+        "yyyy/MM",
+
+        // 年月日
         "yyyyMMdd",
         "yyyy-MM-dd",
         "yyyy-M-d",
