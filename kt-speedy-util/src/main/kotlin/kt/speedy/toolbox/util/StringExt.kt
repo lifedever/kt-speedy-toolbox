@@ -418,6 +418,21 @@ fun String.replaceCnNumToInt(suffix: String): String {
     return newText
 }
 
+/**
+ * 是否乱码
+ */
+fun String.isMessyCode(): Boolean {
+    for (element in this) {
+        // 当从Unicode编码向某个字符集转换时，如果在该字符集中没有对应的编码，则得到0x3f（即问号字符?）
+        // 从其他字符集向Unicode编码转换时，如果这个二进制数在该字符集中没有标识任何的字符，则得到的结果是0xfffd
+        if (element.code == 0xfffd) {
+            // 存在乱码
+            return true
+        }
+    }
+    return false
+}
+
 class StringExt {
     companion object {
         /**
