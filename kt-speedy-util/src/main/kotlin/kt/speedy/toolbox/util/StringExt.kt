@@ -117,26 +117,18 @@ fun String.findDateStrByRegexAndPrefix(prefix: String): List<String> {
  * 冒号分割字符串
  */
 fun String.splintLineByColon(vararg str: String): String {
-    // 构建一个正则表达式，匹配任意一个分隔符
-    val regex = str.joinToString("|") { Regex.escape(it) }.toRegex()
-
-    // 根据正则表达式分割，并保留分隔符
-    val splitParts = this.split(regex).filter { it.isNotEmpty() }
-    val delimiters = regex.findAll(this).map { it.value }.toList()
-
-    // 拼接结果时，重新插入分割词及其分隔符
-    val result = StringBuilder()
-    for (i in splitParts.indices) {
-        if (i < delimiters.size) {
-            result.append(delimiters[i])
-        }
-        result.append(splitParts[i])
-        if (i < splitParts.size - 1) {
-            result.append("\n")
+    val arr = this.split(*str)
+    println(arr)
+    val sb = StringBuilder()
+    println("原文：${this}")
+    arr.forEachIndexed { index, s ->
+        if(index > 0) {
+            sb.append(str[index - 1])
+            sb.append(s)
+            sb.append("\n")
         }
     }
-
-    return result.toString()
+    return sb.toString()
 }
 
 /**
