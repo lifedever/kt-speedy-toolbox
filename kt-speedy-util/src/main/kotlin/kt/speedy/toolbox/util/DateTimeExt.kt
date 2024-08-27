@@ -1,5 +1,6 @@
 package kt.speedy.toolbox.util
 
+import cn.hutool.core.date.DateUtil
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import org.joda.time.format.DateTimeFormat
@@ -168,4 +169,14 @@ fun Date.getQuarterForDate(count: Int = 6): List<Date> {
     return (1..count).map {
         this.toDateTime().minusMonths((it - 1) * 3).toDate()
     }.reversed()
+}
+
+/**
+ * 天数转日期
+ */
+fun Int.dayToDate(): Date {
+    val calendar = Calendar.getInstance()
+    calendar.time = DateUtil.parse("1900-01-01", "yyyy-MM-dd")
+    calendar.add(Calendar.DAY_OF_YEAR, this - 2)
+    return calendar.time
 }
