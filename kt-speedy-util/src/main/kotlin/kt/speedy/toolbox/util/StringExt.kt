@@ -54,9 +54,9 @@ fun String.replaceIndicatorName(): String {
 }
 
 fun String.findLine(startWith: String, removeStartWith: Boolean = false): String? {
-    return this.split("\n").find { it.startsWith(startWith) }?.let {
+    return this.split("\n").find { it.contains(startWith) }?.let {
         if (removeStartWith) {
-            it.replaceFirst(startWith, "")
+            it.replaceBefore(startWith, "").replace(startWith, "")
         } else {
             it
         }
