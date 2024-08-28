@@ -363,7 +363,7 @@ fun String.containsAnyWord(words: Collection<String>): List<String> {
 }
 
 fun String.replaceLast(oldValue: String, newValue: String): String {
-    return if (this.last().toString() == oldValue) {
+    return if (this.lastOrNull()?.toString() == oldValue) {
         this.substring(0, this.length - 1) + newValue
     } else {
         this
