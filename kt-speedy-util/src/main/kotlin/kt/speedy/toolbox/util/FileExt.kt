@@ -5,7 +5,7 @@ import java.io.File
 import javax.imageio.ImageIO
 
 /**
- * 临时生成文件
+ * 临时生成文件，用完后自动删除
  */
 fun File.tempUse(block: () -> Unit) {
     block()
@@ -29,14 +29,27 @@ fun String.filterFiles(): Boolean {
     return filter.none { it == this } && !this.startsWith(".")
 }
 
+/**
+ * 获取文件类型
+ */
 fun File.getFileType(): String {
     return this.name.substringAfterLast('.')
 }
 
+/**
+ * 将字符串路径转换为文件对象
+ */
 fun String.toFile(): File {
     return File(this)
 }
 
+/**
+ * 图片截取
+ * @param xRate x 坐标的百分比位置
+ * @param yRate y 坐标的百分比位置
+ * @param wRate 宽度的百分比
+ * @param hRate 高度得百分比
+ */
 fun File.imageCut(xRate: Double, yRate: Double, wRate: Double, hRate: Double): ByteArray {
     val out = ByteArrayOutputStream()
     val bufferedImage = ImageIO.read(this)

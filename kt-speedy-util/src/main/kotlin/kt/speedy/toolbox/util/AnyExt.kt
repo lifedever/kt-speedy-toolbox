@@ -1,37 +1,65 @@
 package kt.speedy.toolbox.util
 
+/**
+ * 判断是否为空
+ */
+fun Any?.isNull(): Boolean {
+    return this == null
+}
+
+/**
+ * 判断是否不为空
+ */
+fun Any?.isNotNull(): Boolean {
+    return !this.isNull()
+}
+
+/**
+ * 如果不为空，则执行
+ */
 inline fun Any?.ifNotNull(block: () -> Unit) {
     if (this != null) {
         block()
     }
 }
 
-inline fun Boolean.ifTrue(block: () -> Unit) {
-    if (this) {
+/**
+ * 如果为空，则执行
+ */
+inline fun Any?.ifNull(block: () -> Unit) {
+    if (this != null) {
         block()
     }
 }
 
+/**
+ * 如果存在，则执行
+ */
 inline fun <T> Any.ifPresent(block: (a: T) -> Unit) {
     (this as? T)?.let {
         block(it)
     }
 }
 
-fun <T> required(any: T?, errorMsg: String): T {
-    return any ?: throw IllegalArgumentException(errorMsg)
+/**
+ * 返回当前值或者指定值
+ */
+fun <T> T?.required(errorMsg: String): T {
+    return this ?: throw IllegalArgumentException(errorMsg)
 }
 
-inline fun <T1, T2> ifNotNull(value1: T1?, value2: T2?, bothNotNull: (T1, T2) -> (Unit)) {
+/**
+ * 为空则返回默认
+ */
+fun <T> T?.orElse(default: T): T {
+    return this ?: default
+}
+
+/**
+ * 两个值都为空则执行
+ */
+inline fun <T1, T2> ifBothNotNull(value1: T1?, value2: T2, block: (T1, T2) -> (Unit)) {
     if (value1 != null && value2 != null) {
-        bothNotNull(value1, value2)
+        block(value1, value2)
     }
-}
-
-fun Any?.isNull(): Boolean {
-    return this == null
-}
-
-fun Any?.isNotNull(): Boolean {
-    return !this.isNull()
 }

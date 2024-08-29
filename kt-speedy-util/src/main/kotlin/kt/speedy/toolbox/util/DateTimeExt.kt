@@ -30,25 +30,11 @@ class DateTimeExt {
 }
 
 /**
- * 获取一天的最开始
- */
-fun DateTime.startOfDay(): DateTime {
-    return this.millisOfDay().withMinimumValue()
-}
-
-/**
  * 指定某一天
  * @param day 如：01、15
  */
 fun DateTime.toDay(day: String): DateTime {
     return this.toString("yyyy-MM-${day}").toDateTime()
-}
-
-/**
- * 获取一天的结束
- */
-fun DateTime.endOfDay(): DateTime {
-    return this.millisOfDay().withMaximumValue()
 }
 
 /**
@@ -65,12 +51,60 @@ fun DateTime.onlyDate(): DateTime {
     return DateTimeExt.parse(this.toString("yyyy-MM-dd"), "yyyy-MM-dd")
 }
 
+
+/**
+ * 获取一天的最开始
+ */
+fun DateTime.startOfDay(): DateTime {
+    return this.millisOfDay().withMinimumValue()
+}
+
+/**
+ * 获取一天的结束
+ */
+fun DateTime.endOfDay(): DateTime {
+    return this.millisOfDay().withMaximumValue()
+}
+
+/**
+ * 获取一周的开始
+ */
+fun DateTime.startOfWeek(): DateTime {
+    return this.dayOfWeek().withMinimumValue().millisOfDay().withMinimumValue()
+}
+
+/**
+ * 获取一周的结束
+ */
+fun DateTime.endOfWeek(): DateTime {
+    return this.dayOfWeek().withMaximumValue().millisOfDay().withMaximumValue()
+}
+
+/**
+ * 获取一月的开始
+ */
 fun DateTime.startOfMonth(): DateTime {
     return this.dayOfMonth().withMinimumValue().millisOfDay().withMinimumValue()
 }
 
+/**
+ * 获取一月的结束
+ */
 fun DateTime.endOfMonth(): DateTime {
     return this.dayOfMonth().withMaximumValue().millisOfDay().withMaximumValue()
+}
+/**
+ * 获取一年的开始
+ */
+fun DateTime.startOfYear(): DateTime {
+    return this.dayOfYear().withMinimumValue().millisOfDay().withMinimumValue()
+}
+
+/**
+ * 获取一年的结束
+ */
+fun DateTime.endOfYear(): DateTime {
+    return this.dayOfYear().withMaximumValue().millisOfDay().withMaximumValue()
 }
 
 /**

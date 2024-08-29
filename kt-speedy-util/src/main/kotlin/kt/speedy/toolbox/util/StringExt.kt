@@ -53,17 +53,24 @@ fun String.replaceIndicatorName(): String {
         .replace("2", "")
 }
 
+/**
+ * 根据 startWith 获取某一行
+ * @param startWith 查找的字符串
+ * @param removeStartWith 是否删除查找的字符串
+ */
 fun String.findLine(startWith: String, removeStartWith: Boolean = false): String? {
     return this.split("\n").find { it.contains(startWith) }?.let {
         if (removeStartWith) {
-            it.replaceBefore(startWith, "").replace(startWith, "")
+            it.replaceBefore(startWith, "").replaceFirst(startWith, "")
         } else {
             it
         }
     }
 }
 
-
+/**
+ * 根据 startWith 获取某一行，并且删除特殊字符，默认为：":", "："
+ */
 fun String.findLineAndRemoveChats(
     startWith: String,
     removeStartWith: Boolean = true,
@@ -78,6 +85,9 @@ fun String.findLineAndRemoveChats(
     return str?.trim()
 }
 
+/**
+ * 根据正则返回查找的字符串集合
+ */
 fun String.findByRegex(vararg regex: Regex): List<String> {
     regex.forEach { rex ->
         val result = rex.findAll(this)
@@ -88,6 +98,9 @@ fun String.findByRegex(vararg regex: Regex): List<String> {
     return listOf()
 }
 
+/**
+ * 替换字符串
+ */
 fun String.replaceText(range: IntRange, replaceChar: String): String {
     if (range.first < 0 || range.last >= this.length) {
         throw IllegalArgumentException("Range out of bounds")
@@ -95,18 +108,27 @@ fun String.replaceText(range: IntRange, replaceChar: String): String {
     return this.replaceRange(range, replaceChar.repeat(range.count()))
 }
 
+/**
+ * 返回字符串中匹配的日期集合
+ */
 fun String.findDateStrByRegex(): List<String> {
     val regex =
         Regex("""(\d{4}[年-]\d{1,2}[月-]\d{1,2}[日\sT]?\s*\d{1,2}[:：]\d{1,2}([:：]\d{1,2})?)|(\d{4}[年-]\d{1,2}[月-]\d{1,2}[日\sT]?\s*\d{1,2}([点时])\d{1,2}分(\d{1,2}秒)?)|(\d{4}[年-]\d{1,2}[月-]\d{1,2}[日\sT]?)""")
     return this.findByRegex(regex).map { it.trim() }
 }
 
+/**
+ * 返回字符串中匹配的手机号集合
+ */
 fun String.findMobileByRegex(): List<String> {
     val regex = Regex("""1[3-9]\d.{4}\d{4}""")
     return this.findByRegex(regex).map { it.trim() }
 }
 
-fun String.findDateStrByRegexAndPrefix(prefix: String): List<String> {
+/**
+ * 根据前缀查找返回字符串中涉及的日期
+ */
+fun String.findDateStrByRegexAndReplacePrefix(prefix: String): List<String> {
     val regexStr =
         """${prefix}\s*(\d{4}[年-]\d{1,2}[月-]\d{1,2}[日\sT]?\s*\d{1,2}[:：]\d{1,2}([:：]\d{1,2})?)|${prefix}\s*(\d{4}[年-]\d{1,2}[月-]\d{1,2}[日\sT]?\s*\d{1,2}([点时])\d{1,2}分(\d{1,2}秒)?)|${prefix}\s*(\d{4}[年-]\d{1,2}[月-]\d{1,2}[日\sT]?)"""
     val regex = regexStr.toRegex()
@@ -114,7 +136,7 @@ fun String.findDateStrByRegexAndPrefix(prefix: String): List<String> {
 }
 
 /**
- * 冒号分割字符串
+ * 根据指定的字符串进行按行分割
  */
 fun String.splintLineByColon(vararg delimiters: String): String {
     // 找到每个分割符在输入字符串中的位置，并按顺序排序
@@ -202,6 +224,9 @@ fun String?.presentOrNull(): String? {
         this
 }
 
+/**
+ * 判断字符串不为空或者不为空字符
+ */
 fun String?.isPresent(): Boolean {
     return !this.isNullOrBlank()
 }
@@ -210,7 +235,7 @@ fun String?.isPresent(): Boolean {
  * @param doIfPresent 值存在执行的动作
  * @param doIfNotPresent 值不存在执行的动作
  */
-fun String?.ifPresent(doIfPresent: (a: String) -> Unit, doIfNotPresent: () -> Unit) {
+inline fun String?.ifPresent(doIfPresent: (a: String) -> Unit, doIfNotPresent: () -> Unit) {
     if (this.isNotPresent()) {
         doIfNotPresent()
     } else {
@@ -228,11 +253,17 @@ fun String?.isNotPresent(): Boolean {
     return !this.isPresent()
 }
 
+/**
+ * 返回md5
+ */
 fun String.md5(): String {
     return EncryptExt.md5(this)
 }
 
-fun String.sh1(): String {
+/**
+ * 返回sha1
+ */
+fun String.sha1(): String {
     return EncryptExt.sha1(this)
 }
 
@@ -252,10 +283,16 @@ fun String.trimChar(char: Int): String {
     return this.replace(Char(char).toString(), "")
 }
 
+/**
+ * 转换成日期
+ */
 fun String.toDate(pattern: String): Date {
     return DateTimeExt.parse(this, pattern).toDate()
 }
 
+/**
+ * 自动转换成日期
+ */
 fun String.toDate(): Date {
     val formats = listOf(
         // 年月

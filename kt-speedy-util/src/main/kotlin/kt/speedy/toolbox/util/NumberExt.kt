@@ -5,17 +5,23 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.NumberFormat
 
+/**
+ * 判断值是否在最小值和最大值内（包含两端）
+ */
 fun Int.isBetween(min: Int, max: Int): Boolean {
     return this in min..max
 }
 
-fun Number?.toPercentStr(): String {
+/**
+ * 转换成百分比的字符串形式，如24.8%。为空则默认显示 “-”
+ */
+fun Number?.toPercentStr(nullableChar: String = "-"): String {
     return if (this != null) {
         val nf = NumberFormat.getPercentInstance()
         nf.minimumFractionDigits = 1
         return nf.format(this)
     } else {
-        "-"
+        nullableChar
     }
 }
 
@@ -83,9 +89,9 @@ fun Number.toPercentNumber(scale: Int = 3): Double {
 }
 
 /**
- * 小于0
+ * 是否小于0，小于0则执行
  */
-fun Number.ifLessThenZero(doSomeThing: () -> Number): Number {
+inline fun Number.ifLessThenZero(doSomeThing: () -> Number): Number {
     return if (this.toDouble() < 0.0) {
         return doSomeThing()
     } else {
@@ -94,7 +100,7 @@ fun Number.ifLessThenZero(doSomeThing: () -> Number): Number {
 }
 
 /**
- * 元转分
+ * 元 转 分
  */
 fun Double.convertYunToCent(): Int {
     val toDouble = BigDecimal(this).multiply(BigDecimal(100.0)).toDouble()

@@ -20,7 +20,7 @@ object PhoneNumberExt {
     }
 
     /**
-     * 随机生成电话号码
+     * 随机生成移动电话号码
      */
     fun getRandomPhoneNumber(): String {
         val telFirsts = this.getPhoneNumberSegment()
@@ -29,7 +29,7 @@ object PhoneNumberExt {
     }
 
     /**
-     * 提取手机号
+     * 通过正则提取手机号
      */
     fun extractPhoneNumbers(text: String): List<String> {
         val regex = Regex("""1[\d*]{2}[\d*]{4}[\d*]{4}""")
