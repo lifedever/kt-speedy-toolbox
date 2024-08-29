@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>kt-speedy-toolbox</groupId>
+    <groupId>kt.speedy.toolbox</groupId>
     <artifactId>kt-speedy-toolbox</artifactId>
-    <version>1.0.10</version>
+    <version>1.1.0</version>
     <packaging>pom</packaging>
     <modules>
         <module>kt-speedy-util</module>
@@ -25,8 +25,8 @@
             <url>https://packages.aliyun.com/61a43cf69cbfc1b4f046814c/maven/repo-rlwzb</url>
         </repository>
         <snapshotRepository>
-            <id>repo-rlwzb</id>
-            <url>https://packages.aliyun.com/61a43cf69cbfc1b4f046814c/maven/repo-rlwzb</url>
+            <id>repo-fujpm</id>
+            <url>https://packages.aliyun.com/66cc392937a6d8817228df36/maven/repo-fujpm</url>
         </snapshotRepository>
     </distributionManagement>
 
