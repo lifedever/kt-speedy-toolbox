@@ -114,7 +114,7 @@ fun String.replaceText(range: IntRange, replaceChar: String): String {
 fun String.findDateStrByRegex(): List<String> {
     val regex =
         Regex("""(\d{4}[年-]\d{1,2}[月-]\d{1,2}[日\sT]?\s*\d{1,2}[:：]\d{1,2}([:：]\d{1,2})?)|(\d{4}[年-]\d{1,2}[月-]\d{1,2}[日\sT]?\s*\d{1,2}([点时])\d{1,2}分(\d{1,2}秒)?)|(\d{4}[年-]\d{1,2}[月-]\d{1,2}[日\sT]?)""")
-    return this.findByRegex(regex).map { it.trim() }
+    return this.findByRegex(regex).map { it.trim().replace("：", ":") }
 }
 
 /**
