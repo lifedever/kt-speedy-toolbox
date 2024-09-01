@@ -485,8 +485,8 @@ inline fun String.ifNotPresentOrEqual(equalStr: String, block: () -> String): St
 /**
  * 如果字符串不存在或者包含某个值，则执行block
  */
-inline fun String.ifNotPresentOrContains(str: String, block: () -> String): String {
-    return if (this.isNotPresent() || this.contains(str)) block() else this
+inline fun String?.ifNotPresentOrContains(str: String, block: () -> String): String {
+    return if (this.isNotPresent() || this!!.contains(str)) block() else this
 }
 
 /**
