@@ -1,6 +1,7 @@
 package kt.speedy.toolbox.data.jpa
 
 import jakarta.persistence.*
+import kt.speedy.toolbox.data.jpa.util.IdKit
 import org.hibernate.annotations.Comment
 import org.springframework.data.annotation.CreatedBy
 import org.springframework.data.annotation.CreatedDate
@@ -46,6 +47,6 @@ open class SupportModal : Serializable {
     var deleted: Boolean? = false
 
     init {
-        if (id == null) id = IdUtil.objectId()
+        if (id == null) id = IdKit.get()
     }
 }
