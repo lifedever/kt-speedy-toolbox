@@ -113,3 +113,35 @@ fun Double.convertYunToCent(): Int {
 fun Int.convertCentToYun(): Double {
     return this.ddiv(100, 2)
 }
+
+fun Int.toChinese(): String {
+    if (this == 0) return "零"
+
+    val units = listOf("", "十", "百", "千", "万", "十万", "百万", "千万", "亿", "十亿", "百亿", "千亿")
+    val digits = listOf("零", "一", "二", "三", "四", "五", "六", "七", "八", "九")
+
+    var number = this
+    var result = StringBuilder()
+    var unitPos = 0
+    var zero = true
+
+    while (number > 0) {
+        val digit = number % 10
+        if (digit != 0) {
+            result.insert(0, digits[digit] + units[unitPos])
+            zero = false
+        } else if (!zero) {
+            result.insert(0, "零")
+            zero = true
+        }
+        unitPos++
+        number /= 10
+    }
+
+    // 处理特殊情况，如 "一十" 而不是 "一十零"
+    if (result.startsWith("一十")) {
+        result = StringBuilder(result.substring(1))
+    }
+
+    return result.toString()
+}
