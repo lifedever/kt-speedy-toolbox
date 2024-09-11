@@ -295,87 +295,71 @@ fun String.toDate(pattern: String): Date {
  */
 fun String.toDate(): Date {
     val formats = listOf(
-        // 年月
-        "yyyy",
-        "yyyy年",
-        "yyyy-MM",
-        "yyyy-M",
-        "yyyy/M",
-        "yyyy/MM",
-        "yyyy年MM月",
-        "yyyy年M月",
-
-        // 年月日
-        "yyyy-MM-dd",
-        "yyyy-M-d",
-        "yyyy/MM/dd",
-        "yyyy/M/d",
-        "yyyy年MM月dd日",
-        "yyyy年M月d日",
-        // 带时分秒
-        "yyyyMMdd HH:mm:ss",
-        "yyyy-MM-dd HH:mm:ss",
-        "yyyy-M-d HH:mm:ss",
-        "yyyy/MM/dd HH:mm:ss",
-        "yyyy/M/d HH:mm:ss",
         "yyyy年MM月dd日 HH:mm:ss",
+        "yyyy-MM-dd HH:mm:ss",
+        "yyyy/MM/dd HH:mm:ss",
         "yyyy年MM月dd日HH:mm:ss",
         "yyyy年M月d日 HH:mm:ss",
+        "yyyyMMdd HH:mm:ss",
+        "yyyy-M-d HH:mm:ss",
+        "yyyy/M/d HH:mm:ss",
         "yyyy年M月d日HH:mm:ss",
-
-        "yyyyMMdd H:m:s",
-        "yyyy-MM-dd H:m:s",
-        "yyyy-M-d H:m:s",
-        "yyyy/MM/dd H:m:s",
-        "yyyy/M/d H:m:s",
         "yyyy年MM月dd日 H:m:s",
-        "yyyy年MM月dd日H:m:s",
-        "yyyy年M月d日 H:m:s",
-        "yyyy年M月d日H:m:s",
-
-        // 带时分
-        "yyyyMMdd HH:mm",
-        "yyyy-MM-dd HH:mm",
-        "yyyy-M-d HH:mm",
-        "yyyy/MM/dd HH:mm",
-        "yyyy/M/d HH:mm",
         "yyyy年MM月dd日 HH:mm",
+        "yyyy-MM-dd H:m:s",
+        "yyyy/MM/dd H:m:s",
+        "yyyy年MM月dd日H:m:s",
+        "yyyy-MM-dd HH:mm",
+        "yyyy/MM/dd HH:mm",
         "yyyy年MM月dd日HH:mm",
+        "yyyy年M月d日 H:m:s",
         "yyyy年M月d日 HH:mm",
-        "yyyy年M月d日HH:mm",
-        // 带时分
-        "yyyyMMdd H:m",
-        "yyyy-MM-dd H:m",
-        "yyyy-M-d H:m",
-        "yyyy/MM/dd H:m",
-        "yyyy/M/d H:m",
         "yyyy年MM月dd日 H:m",
+        "yyyyMMdd H:m:s",
+        "yyyy-M-d H:m:s",
+        "yyyy/M/d H:m:s",
+        "yyyy年M月d日H:m:s",
+        "yyyyMMdd HH:mm",
+        "yyyy-M-d HH:mm",
+        "yyyy/M/d HH:mm",
+        "yyyy年M月d日HH:mm",
+        "yyyy-MM-dd H:m",
+        "yyyy/MM/dd H:m",
         "yyyy年MM月dd日H:m",
-        "yyyy年M月d日 H:m",
-        "yyyy年M月d日H:m",
-
-        // 日期时间序号
-        "yyyyMMdd",
-        "yyyyMMddHH",
-        "yyyyMMddHHmm",
         "yyyyMMddHHmmss",
-
-        // 月和日
-        "MMdd",
-        "Md",
-        "MM-dd",
-        "M-d",
-        "MM/dd",
-        "M/d",
+        "yyyy年M月d日 H:m",
+        "yyyyMMdd H:m",
+        "yyyy-M-d H:m",
+        "yyyy/M/d H:m",
+        "yyyy年M月d日H:m",
+        "yyyyMMddHHmm",
+        "yyyy年MM月dd日",
+        "yyyy-MM-dd",
+        "yyyy/MM/dd",
+        "yyyyMMddHH",
+        "yyyy年M月d日",
+        "yyyy年MM月",
+        "yyyy-M-d",
+        "yyyy/M/d",
+        "yyyyMMdd",
+        "yyyy-MM",
+        "yyyy/MM",
+        "yyyy年M月",
+        "yyyy-M",
+        "yyyy/M",
         "MM月dd日",
+        "yyyy年",
+        "MM-dd",
+        "MM/dd",
+        "yyyy",
+        "MMdd",
         "M月d日",
-
-        // 月
+        "M-d",
+        "M/d",
         "MM月",
-        "M月",
-
-        // 日
         "dd日",
+        "Md",
+        "M月",
         "d日",
     )
     // 预处理不规范的情况
@@ -387,7 +371,7 @@ fun String.toDate(): Date {
         .replace(" :", ":")
         .replace(" : ", ":")
 
-    formats.filter { it.length == this.length }.forEach { format ->
+    formats.forEach { format ->
         try {
             return text.toDate(format)
         } catch (e: Exception) {
