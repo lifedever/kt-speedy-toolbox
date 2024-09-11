@@ -387,7 +387,7 @@ fun String.toDate(): Date {
         .replace(" :", ":")
         .replace(" : ", ":")
 
-    formats.forEach { format ->
+    formats.filter { it.length == this.length }.forEach { format ->
         try {
             return text.toDate(format)
         } catch (e: Exception) {
