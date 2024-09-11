@@ -113,7 +113,7 @@ fun String.replaceText(range: IntRange, replaceChar: String): String {
  */
 fun String.findDateStrByRegex(): List<String> {
     val regex =
-        Regex("""(\d{4}[年-]\d{1,2}[月-]\d{1,2}[日\sT]?\s*\d{1,2}[:：]\d{1,2}([:：]\d{1,2})?)|(\d{4}[年-]\d{1,2}[月-]\d{1,2}[日\sT]?\s*\d{1,2}([点时])\d{1,2}分(\d{1,2}秒)?)|(\d{4}[年-]\d{1,2}[月-]\d{1,2}[日\sT]?)""")
+        Regex("""(\d{4}[年-]\d{1,2}[月-]\d{1,2}[日\sT]?\s*\d{1,2}[:：]\d{1,2}([:：]\d{1,2})?)|(\d{4}[年-]\d{1,2}[月-]\d{1,2}[日\sT]?\s*\d{1,2}([点时])\d{1,2}分(\d{1,2}秒)?)|(\d{4}[年-]\d{1,2}[月-]\d{1,2}[日\sT]?)|(\d{4}[年-]\d{1,2}月?)|(\d{4}年?)|(\d{1,2}[月-]\d{1,2}[日\sT])|(\d{1,2}月)|(\d{1,2}日)""")
     return this.findByRegex(regex).map { it.trim().replace("：", ":") }
 }
 
@@ -296,15 +296,16 @@ fun String.toDate(pattern: String): Date {
 fun String.toDate(): Date {
     val formats = listOf(
         // 年月
-        "yyyy年M月",
-        "yyyy年MM月",
-        "yyyy-M",
+        "yyyy",
+        "yyyy年",
         "yyyy-MM",
+        "yyyy-M",
         "yyyy/M",
         "yyyy/MM",
+        "yyyy年MM月",
+        "yyyy年M月",
 
         // 年月日
-        "yyyyMMdd",
         "yyyy-MM-dd",
         "yyyy-M-d",
         "yyyy/MM/dd",
@@ -352,6 +353,30 @@ fun String.toDate(): Date {
         "yyyy年MM月dd日H:m",
         "yyyy年M月d日 H:m",
         "yyyy年M月d日H:m",
+
+        // 日期时间序号
+        "yyyyMMdd",
+        "yyyyMMddHH",
+        "yyyyMMddHHmm",
+        "yyyyMMddHHmmss",
+
+        // 月和日
+        "MMdd",
+        "Md",
+        "MM-dd",
+        "M-d",
+        "MM/dd",
+        "M/d",
+        "MM月dd日",
+        "M月d日",
+
+        // 月
+        "MM月",
+        "M月",
+
+        // 日
+        "dd日",
+        "d日",
     )
     // 预处理不规范的情况
 
@@ -371,6 +396,18 @@ fun String.toDate(): Date {
         }
     }
     throw Exception("未知格式的日期值：${this}")
+}
+
+/**
+ * 自动转换日期，如果转换失败则返回null
+ */
+fun String.toDateOrNull(): Date? {
+    return try {
+        this.toDate()
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
 }
 
 fun String.toDateTime(pattern: String = "yyyy-MM-dd"): DateTime {
@@ -502,6 +539,26 @@ fun String.isMessyCode(): Boolean {
         }
     }
     return false
+}
+
+/**
+ * 获取指定头部和尾部变量之间截取内容（包含头尾）的功能
+ */
+fun String.findBetween(start: String, end: String, containsStartAndEnd: Boolean = true): String? {
+    val startIndex = this.indexOf(start)
+    val endIndex = this.indexOf(end, startIndex + start.length)
+
+    val subStr = if (startIndex != -1 && endIndex != -1) {
+        this.substring(startIndex, endIndex + end.length)
+    } else {
+        null
+    }
+
+    return if (containsStartAndEnd) {
+        subStr
+    } else {
+        subStr?.replaceFirst(start, "")?.replaceLast(end, "")
+    }
 }
 
 class StringExt {
