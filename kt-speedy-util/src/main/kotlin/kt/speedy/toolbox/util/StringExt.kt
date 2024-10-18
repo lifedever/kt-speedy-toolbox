@@ -292,6 +292,7 @@ fun String.toDate(pattern: String): Date {
 
 /**
  * 自动转换成日期
+ * 注意开发的时候，格式的顺序需要按照长短从长到短排列
  */
 fun String.toDate(): Date {
     val formats = listOf(
@@ -543,6 +544,37 @@ fun String.findBetween(start: String, end: String, containsStartAndEnd: Boolean 
     } else {
         subStr?.replaceFirst(start, "")?.replaceLast(end, "")
     }
+}
+
+/**
+ * 根据真实的字符长度分割字符串，中文占 2，英文占 1
+ * @param size 分割长度
+ */
+fun String.chunkedRealSizeByCharset(size: Int): List<String> {
+    var sb = StringBuilder()
+    var length = 0
+    val result = mutableListOf<String>()
+    this.forEach { char ->
+        val charSize = char.toString().toByteArray(charset = Charsets.UTF_8).size.let {
+            if (it == 3) {
+                2
+            } else {
+                1
+            }
+        }
+        if (length + charSize > size) {
+            result.add(sb.toString())
+            sb = StringBuilder()
+            length = 0
+        }
+        sb.append(char)
+        length += charSize
+    }
+
+    if (sb.isNotEmpty()) {
+        result.add(sb.toString())
+    }
+    return result
 }
 
 class StringExt {
