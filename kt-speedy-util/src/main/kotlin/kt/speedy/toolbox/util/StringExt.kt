@@ -501,7 +501,14 @@ fun String.replaceCnNumToInt(suffix: String): String {
  * 如果字符串不存在或者等于某个值，则执行block
  */
 inline fun String?.ifNotPresentOrEqual(equalStr: String, block: () -> String): String {
-    return if (this. isNotPresent() || this == equalStr) block() else this!!
+    return if (this.isNotPresent() || this == equalStr) block() else this!!
+}
+
+/**
+ * 如果字符串不存在或者等于某个值，则执行block
+ */
+fun String?.ifNotPresentOrEqual(equalStr: String, replaceChar: String): String {
+    return if (this.isNotPresent() || this == equalStr) replaceChar else this!!
 }
 
 /**
@@ -509,6 +516,13 @@ inline fun String?.ifNotPresentOrEqual(equalStr: String, block: () -> String): S
  */
 inline fun String?.ifNotPresentOrContains(str: String, block: () -> String): String {
     return if (this.isNotPresent() || this!!.contains(str)) block() else this
+}
+
+/**
+ * 如果字符串不存在或者包含某个值，则执行block
+ */
+fun String?.ifNotPresentOrContains(str: String, replaceChar: String): String {
+    return if (this.isNotPresent() || this!!.contains(str)) replaceChar else this
 }
 
 /**
