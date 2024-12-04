@@ -9,7 +9,7 @@ import java.text.NumberFormat
  * 判断值是否在最小值和最大值内（包含两端）
  */
 fun Int.isBetween(min: Int, max: Int): Boolean {
-    return this in min..max
+    return (min..max).contains(this)
 }
 
 /**
@@ -91,9 +91,9 @@ fun Number.toPercentNumber(scale: Int = 3): Double {
 /**
  * 是否小于0，小于0则执行
  */
-inline fun Number.ifLessThenZero(doSomeThing: () -> Number): Number {
+inline fun Number.ifLessThanZero(block: () -> Number): Number {
     return if (this.toDouble() < 0.0) {
-        return doSomeThing()
+        return block()
     } else {
         this
     }

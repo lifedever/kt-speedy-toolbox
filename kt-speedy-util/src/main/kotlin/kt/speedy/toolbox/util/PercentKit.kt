@@ -1,5 +1,6 @@
 package kt.speedy.toolbox.util
 
+import cn.hutool.json.JSONObject
 import kotlin.math.floor
 import kotlin.math.pow
 
@@ -9,8 +10,8 @@ import kotlin.math.pow
 object PercentKit {
     /**
      * 修复百分比结果相加不等于100的问题
-     * @param arr 原始值的数组
-     * @param sum 原始值之和
+     * @param arr 原始值的数组 如 [10, 32, 55, 22]
+     * @param sum 原始值之和 10+32+55+22=119
      * @param idx 当前位置索引
      * @param scale 精度
      *
@@ -71,4 +72,33 @@ object PercentKit {
         // 这时候的seats就会总数占比会100%
         return seats[idx] / digits
     }
+
+    fun getPercentValue(arr: List<Double>, idx: Int, scale: Int) : Double {
+        var sum = arr.sum()
+        return getPercentValue(arr, sum, idx, scale)
+    }
+     fun getPercentValue(arr: List<Double>,scale: Int) : List<Double> {
+         var sum = arr.sum()
+         return arr.mapIndexed { index, item ->
+             getPercentValue(arr, sum, index, scale)
+         }
+    }
+}
+
+fun main() {
+    val arr = listOf(10.0, 32.0, 55.0, 22.0)
+
+
+
+    val percentArr = arr.mapIndexed {index, item ->
+
+        PercentKit.getPercentValue(
+            arr = arr,
+            sum = 119.0,
+            idx = index,
+            scale = 1
+        )
+    }
+
+    println(percentArr)
 }

@@ -46,17 +46,14 @@ fun String.clearHtmlTag(): String {
 }
 
 /**
- * 将指标名称替换成指定字符
- */
-fun String.replaceIndicatorName(): String {
-    return this.replace(".", "-")
-        .replace("2", "")
-}
-
-/**
  * 根据 startWith 获取某一行
  * @param startWith 查找的字符串
  * @param removeStartWith 是否删除查找的字符串
+ *
+ * “东方森东方
+ * 经核查：xxxxx”
+ * 发动发动发动发动
+ * “东发动发动”
  */
 fun String.findLine(startWith: String, removeStartWith: Boolean = false): String? {
     return this.split("\n").find { it.contains(startWith) }?.let {
@@ -137,6 +134,12 @@ fun String.findDateStrByRegexAndReplacePrefix(prefix: String): List<String> {
 
 /**
  * 根据指定的字符串进行按行分割
+ * 情况1：有，或者无
+ * 情况2：有，或者无
+ * 情况3：有，或者无
+ *
+ * 情况1：有情况2：有
+ * 情况3：有
  */
 fun String.splintLineByColon(vararg delimiters: String): String {
     // 找到每个分割符在输入字符串中的位置，并按顺序排序
@@ -150,7 +153,6 @@ fun String.splintLineByColon(vararg delimiters: String): String {
 
     for (delimiter in sortedDelimiters) {
         val index = remainingText.indexOf(delimiter)
-
         if (index != -1) {
             // 追加分割符及其后内容
             result.append(remainingText.substring(index, index + delimiter.length))
@@ -217,7 +219,7 @@ fun String.substringMax(count: Int): String {
 /**
  * 字符串不为空或空白
  */
-fun String?.presentOrNull(): String? {
+fun String?.nullIfBlank(): String? {
     return if (this.isNullOrBlank())
         null
     else
@@ -380,7 +382,7 @@ fun String.toDate(): Date {
             println("ERROR: Exception while parsing date: $this, format: $format")
         }
     }
-    throw Exception("未知格式的日期值：${this}")
+    throw IllegalArgumentException("未知格式的日期值：${this}")
 }
 
 /**
@@ -403,6 +405,9 @@ fun String.toDateTime(): DateTime {
     return this.toDate().toDateTime()
 }
 
+/**
+ * 返回字符串分割后的数组的第index个元素，如果没有返回null
+ */
 fun String.splitChild(delimiter: String, index: Int): String? {
     val sts = this.split(delimiter)
     return if (sts.size > index) {
@@ -421,6 +426,9 @@ fun String.containsAnyWord(words: Collection<String>): List<String> {
     return words.filter { this.contains(it) }.toList()
 }
 
+/**
+ * 替换最后一个匹配项
+ */
 fun String.replaceLast(oldValue: String, newValue: String): String {
     return if (this.lastOrNull()?.toString() == oldValue) {
         this.substring(0, this.length - 1) + newValue
@@ -440,7 +448,9 @@ fun String.replaceBatch(oldValues: List<String>, newValue: String): String {
     return str
 }
 
-
+/**
+ * 将中文数字转换成阿拉伯数字
+ */
 fun String.toArabicNumber(): Int {
     val chineseNumbers = mapOf(
         "一" to 1, "二" to 2, "三" to 3, "四" to 4, "五" to 5,
@@ -591,89 +601,27 @@ fun String.chunkedRealSizeByCharset(size: Int): List<String> {
     return result
 }
 
-class StringExt {
-    companion object {
-        /**
-         * 生成指定长度的随机字符串
-         */
-        fun randomStr(len: Int): String {
-            var i: Int  // 生成的随机数
-            var count = 0 // 生成的密码的长度
-            // 密码字典
-            val str = charArrayOf(
-                'A',
-                'B',
-                'C',
-                'D',
-                'E',
-                'F',
-                'G',
-                'H',
-                'I',
-                'J',
-                'K',
-                'L',
-                'M',
-                'N',
-                'O',
-                'P',
-                'Q',
-                'R',
-                'S',
-                'T',
-                'U',
-                'V',
-                'W',
-                'X',
-                'Y',
-                'Z',
-                'a',
-                'b',
-                'c',
-                'd',
-                'e',
-                'f',
-                'g',
-                'h',
-                'i',
-                'j',
-                'k',
-                'l',
-                'm',
-                'n',
-                'o',
-                'p',
-                'q',
-                'r',
-                's',
-                't',
-                'u',
-                'v',
-                'w',
-                'x',
-                'y',
-                'z',
-                '0',
-                '1',
-                '2',
-                '3',
-                '4',
-                '5',
-                '6',
-                '7',
-                '8',
-                '9'
-            )
-            val stringBuffer = StringBuffer("")
-            val r = Random()
-            while (count < len) {
-                i = r.nextInt(str.size)
-                stringBuffer.append(str[i])
-                count++
-            }
-            return stringBuffer.toString()
-        }
+/**
+ * 删除末尾指定字符
+ */
+fun String.removeLast(char: String): String {
+    return if(this.endsWith(char)){
+        this.dropLast(char.length)
+    }else {
+        this
     }
 }
 
+/**
+ * 首字母变成小写
+ */
+fun String.lowerFirstChat(): String {
+    return this.replaceFirstChar { it.lowercaseChar() }
+}
 
+/**
+ * 首字母变成大写
+ */
+fun String.upperFirstChat(): String {
+    return this.replaceFirstChar { it.uppercase() }
+}

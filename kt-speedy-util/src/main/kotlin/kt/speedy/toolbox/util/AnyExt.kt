@@ -44,7 +44,7 @@ inline fun <T> Any.ifPresent(block: (a: T) -> Unit) {
 /**
  * 返回当前值或者指定值
  */
-fun <T> T?.required(errorMsg: String): T {
+fun <T> T?.assertRequired(errorMsg: String): T {
     return this ?: throw IllegalArgumentException(errorMsg)
 }
 

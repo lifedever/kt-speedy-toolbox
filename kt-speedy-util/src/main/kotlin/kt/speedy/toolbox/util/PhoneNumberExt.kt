@@ -7,7 +7,7 @@ object PhoneNumberExt {
     /**
      * 获取中国移动号码
      */
-    fun getPhoneNumberSegment(): Array<String> {
+    fun getCMCCPhoneNumberSegment(): Array<String> {
         return arrayOf(
             "1340", "1341", "1342", "1343", "1344", "1345", "1346", "1347", "1348",
             "135", "136", "137", "138", "139",
@@ -23,7 +23,7 @@ object PhoneNumberExt {
      * 随机生成移动电话号码
      */
     fun getRandomPhoneNumber(): String {
-        val telFirsts = this.getPhoneNumberSegment()
+        val telFirsts = this.getCMCCPhoneNumberSegment()
         val prefix = telFirsts[Random.nextInt(0, telFirsts.size - 1)]
         return (prefix + RandomUtil.randomInt(10000000, 99999999).toString()).substring(0, 11)
     }

@@ -23,7 +23,8 @@ class DateTimeExt {
         }
 
         fun todayUTC(): Date {
-            return org.joda.time.DateTime.now(org.joda.time.DateTimeZone.forTimeZone(java.util.TimeZone.getTimeZone("UTC")))
+            return DateTime
+                .now(DateTimeZone.forTimeZone(TimeZone.getTimeZone("UTC")))
                 .toDate()
         }
     }
@@ -33,7 +34,7 @@ class DateTimeExt {
  * 指定某一天
  * @param day 如：01、15
  */
-fun DateTime.toDay(day: String): DateTime {
+fun DateTime.dayOfThisMonth(day: String): DateTime {
     return this.toString("yyyy-MM-${day}").toDateTime()
 }
 
@@ -155,7 +156,7 @@ fun java.time.LocalDate.toDate(): Date {
  * 转换为Date
  */
 fun LocalDateTime.toDate(): Date {
-    return Date.from(this.atZone(java.time.ZoneId.systemDefault()).toInstant())
+    return Date.from(this.atZone(ZoneId.systemDefault()).toInstant())
 }
 
 /**

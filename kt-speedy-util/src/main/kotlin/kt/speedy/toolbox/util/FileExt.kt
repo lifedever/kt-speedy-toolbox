@@ -7,7 +7,7 @@ import javax.imageio.ImageIO
 /**
  * 临时生成文件，用完后自动删除
  */
-fun File.tempUse(block: () -> Unit) {
+fun File.snapUse(block: () -> Unit) {
     block()
     this.delete()
 }
@@ -24,6 +24,7 @@ fun File.isImageFile(): Boolean {
 fun String.filterFiles(): Boolean {
     val filter = arrayOf(
         "__MACOSX",
+        ".DS_Store",
     )
 
     return filter.none { it == this } && !this.startsWith(".")
@@ -33,7 +34,7 @@ fun String.filterFiles(): Boolean {
  * 获取文件类型
  */
 fun File.getFileType(): String {
-    return this.name.substringAfterLast('.')
+    return this.name.substringAfterLast('.').lowercase()
 }
 
 /**
