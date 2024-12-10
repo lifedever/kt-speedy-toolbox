@@ -508,6 +508,24 @@ fun String.replaceCnNumToInt(suffix: String): String {
 }
 
 /**
+ * 如果等于某个值，则执行
+ */
+inline fun String.ifEquals(other: String, block: () -> Unit) {
+    if (this == other) {
+        block()
+    }
+}
+
+/**
+ * 如果包含某个值，则执行
+ */
+inline fun String.ifContains(other: String, block: () -> Unit) {
+    if (this.contains(other)) {
+        block()
+    }
+}
+
+/**
  * 如果字符串不存在或者等于某个值，则执行block
  */
 inline fun String?.ifNotPresentOrEqual(equalStr: String, block: () -> String): String {
