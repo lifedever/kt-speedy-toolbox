@@ -510,9 +510,9 @@ fun String.replaceCnNumToInt(suffix: String): String {
 /**
  * 如果等于某个值，则执行
  */
-inline fun String.ifEquals(other: String, block: () -> Unit) {
+inline fun String.ifEquals(other: String, block: (String) -> Unit) {
     if (this == other) {
-        block()
+        block(this)
     }
 }
 
@@ -623,9 +623,9 @@ fun String.chunkedRealSizeByCharset(size: Int): List<String> {
  * 删除末尾指定字符
  */
 fun String.removeLast(char: String): String {
-    return if(this.endsWith(char)){
+    return if (this.endsWith(char)) {
         this.dropLast(char.length)
-    }else {
+    } else {
         this
     }
 }
