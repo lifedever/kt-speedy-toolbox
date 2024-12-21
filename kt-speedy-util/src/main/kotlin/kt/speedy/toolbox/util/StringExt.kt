@@ -142,13 +142,14 @@ fun String.findDateStrByRegexAndReplacePrefix(prefix: String): List<String> {
  * 情况3：有
  */
 fun String.splintLineByColon(vararg delimiters: String): String {
+    val text = this.replace("\n", "")
     // 找到每个分割符在输入字符串中的位置，并按顺序排序
     val sortedDelimiters = delimiters.mapNotNull { delimiter ->
-        val index = this.indexOf(delimiter)
+        val index = text.indexOf(delimiter)
         if (index != -1) delimiter to index else null
     }.sortedBy { it.second }.map { it.first }
 
-    var remainingText = this
+    var remainingText = text
     val result = StringBuilder()
 
     for (delimiter in sortedDelimiters) {
