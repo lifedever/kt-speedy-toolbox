@@ -1,4 +1,4 @@
-package kt.speedy.toolbox.data.jpa
+package kt.speedy.toolbox.data.jpa.converter
 
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter
