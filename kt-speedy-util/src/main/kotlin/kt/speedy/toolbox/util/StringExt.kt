@@ -301,6 +301,7 @@ fun String.toDate(): Date {
     val formats = listOf(
         "yyyy年MM月dd日 HH:mm:ss",
         "yyyy-MM-dd HH:mm:ss",
+        "yyyy-MM-ddHH:mm:ss",
         "yyyy/MM/dd HH:mm:ss",
         "yyyy年MM月dd日HH:mm:ss",
         "yyyy年M月d日 HH:mm:ss",
@@ -314,6 +315,7 @@ fun String.toDate(): Date {
         "yyyy/MM/dd H:m:s",
         "yyyy年MM月dd日H:m:s",
         "yyyy-MM-dd HH:mm",
+        "yyyy-MM-ddHH:mm",
         "yyyy/MM/dd HH:mm",
         "yyyy年MM月dd日HH:mm",
         "yyyy年M月d日 H:m:s",
