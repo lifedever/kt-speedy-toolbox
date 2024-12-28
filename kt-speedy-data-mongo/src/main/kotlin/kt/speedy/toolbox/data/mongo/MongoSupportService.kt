@@ -311,6 +311,13 @@ abstract class MongoSupportService<T : MongoSupportModel>(private val clazz: Cla
     }
 
     /**
+     * add To Set
+     */
+    fun pull(id: ObjectId, key: String, value: Any): T {
+        return this.updateById(id, Update().pull(key, value))
+    }
+
+    /**
      * 根据id更新一条数据的一个属性，采用 set 或 unset 操作
      */
     @Throws(Exception::class)
