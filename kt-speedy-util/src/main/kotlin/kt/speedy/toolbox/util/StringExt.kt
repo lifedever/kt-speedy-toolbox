@@ -246,9 +246,15 @@ inline fun String?.ifPresent(doIfPresent: (a: String) -> Unit, doIfNotPresent: (
     }
 }
 
-fun String?.ifPresent(doIfPresent: (a: String) -> Unit) {
+inline fun String?.ifPresent(doIfPresent: (a: String) -> Unit) {
     if (this.isPresent()) {
         doIfPresent(this!!)
+    }
+}
+
+inline fun String?.ifNotPresent(doIfNotPresent: (a: String) -> Unit) {
+    if (this.isNotPresent()) {
+        doIfNotPresent(this!!)
     }
 }
 
