@@ -384,7 +384,9 @@ fun String.toDate(): Date {
         .replace(": ", ":")
         .replace(" :", ":")
         .replace(" : ", ":")
-
+        .replace("时", ":")
+        .replace("分", ":")
+        .replace("秒", "")
     formats.forEach { format ->
         try {
             return text.toDate(format)
