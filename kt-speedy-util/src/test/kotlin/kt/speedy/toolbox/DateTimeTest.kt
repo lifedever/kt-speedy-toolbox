@@ -22,4 +22,11 @@ class DateTimeTest {
         println(DateTime.now().startOfYear())
         println(DateTime.now().endOfYear())
     }
+
+    @Test
+    fun test2() {
+        val start = "2025-03-01"
+        val end = "2025-02-20"
+        println(start.toDateTime().getMonthsBetween(end.toDateTime()))
+    }
 }

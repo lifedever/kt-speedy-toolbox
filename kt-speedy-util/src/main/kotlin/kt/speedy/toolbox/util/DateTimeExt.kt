@@ -215,3 +215,29 @@ fun Int.dayToDate(): Date {
     calendar.add(Calendar.DAY_OF_YEAR, this - 2)
     return calendar.time
 }
+
+/**
+ * 获取两个日期之间的所有月份（包含这两个日期）
+ * @param end 结束日期
+ * @return 月份列表（从小到大排序）
+ */
+fun DateTime.getMonthsBetween(end: DateTime): List<DateTime> {
+    val months = mutableListOf<DateTime>()
+    val startMonth = this.startOfMonth()
+    val endMonth = end.startOfMonth()
+    
+    // 确定开始和结束月份
+    val (first, last) = if (startMonth.isBefore(endMonth)) {
+        startMonth to endMonth
+    } else {
+        endMonth to startMonth
+    }
+    
+    var current = first
+    while (!current.isAfter(last)) {
+        months.add(current)
+        current = current.plusMonths(1)
+    }
+    
+    return months
+}
