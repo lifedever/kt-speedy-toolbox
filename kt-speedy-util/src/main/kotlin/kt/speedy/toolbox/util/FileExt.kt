@@ -68,3 +68,15 @@ fun File.imageCut(xRate: Double, yRate: Double, wRate: Double, hRate: Double): B
     ImageIO.write(cutImage, this.getFileType(), out)
     return out.toByteArray()
 }
+
+/**
+ * 判断是否为音频文件
+ */
+fun String.isAudioFile(): Boolean {
+    val extension = this.substringAfterLast('.', "").lowercase()
+    val audioExtensions = setOf(
+        "mp3", "wav", "aac", "flac", "ogg", "m4a",
+        "aiff", "wma", "amr", "mid", "midi", "opus"
+    )
+    return extension in audioExtensions
+}
