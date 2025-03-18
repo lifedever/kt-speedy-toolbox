@@ -1,6 +1,11 @@
 package kt.speedy.toolbox.util
 
 import cn.hutool.core.bean.BeanUtil
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
 
 /**
  * 集合是否不为空
@@ -45,4 +50,34 @@ fun <T> Collection<T>.toParallels(childrenKey: String = "children"): Collection<
     }
 
     return list
+}
+
+/**
+ * 并发执行多个任务
+ */
+suspend fun <T, R> Collection<T>.parallelRunTasks(limit: Int, await: Boolean = true, call: (t: T) -> R) {
+    val items = this
+    val channel = Channel<T>(Channel.UNLIMITED)
+    coroutineScope {
+        // 启动生产者协程
+        launch {
+            items.filterNotNull().forEach { ruler ->
+                channel.send(ruler)
+            }
+            channel.close()
+        }
+
+        // 启动固定数量的消费者协程
+        val jobs = List(limit) {
+            launch(Dispatchers.Default) {
+                for (t in channel) {
+                    call(t)
+                }
+            }
+        }
+        // 等待所有任务完成
+        if (await) {
+            jobs.joinAll()
+        }
+    }
 }
