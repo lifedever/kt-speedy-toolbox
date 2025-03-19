@@ -7,7 +7,7 @@ import javax.imageio.ImageIO
 /**
  * 临时生成文件，用完后自动删除
  */
-fun File.snapUse(block: () -> Unit) {
+fun File.tempUse(block: () -> Unit) {
     block()
     this.delete()
 }

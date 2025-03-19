@@ -1,8 +1,8 @@
 package kt.speedy.toolbox
 
+import kotlin.test.Test
 import kt.speedy.toolbox.util.*
 import org.joda.time.DateTime
-import kotlin.test.Test
 
 class DateTimeTest {
     @Test

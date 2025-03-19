@@ -7,6 +7,6 @@ class NumberTest {
 
     @Test
     fun test1() {
-        println(6.toChinese())
+        println(4344.toChinese())
     }
 }
