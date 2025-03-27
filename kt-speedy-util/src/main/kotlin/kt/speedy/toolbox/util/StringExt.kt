@@ -669,3 +669,10 @@ fun String.getBooleanByRegex(regexStr: String): Boolean {
         ?.trim() // 去除首尾空格
         ?.toBooleanStrict() == true
 }
+
+/**
+ * 是否包含指定字符串的任意一个
+ */
+fun String.containsAnyOf(vararg keywords: String, ignoreCase: Boolean = false): Boolean {
+    return keywords.any { this.contains(it, ignoreCase) }
+}
