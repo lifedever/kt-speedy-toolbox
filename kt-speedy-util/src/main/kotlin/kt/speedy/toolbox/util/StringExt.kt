@@ -658,3 +658,14 @@ fun String.lowerFirstChat(): String {
 fun String.upperFirstChat(): String {
     return this.replaceFirstChar { it.uppercase() }
 }
+
+/**
+ * 解析true或false
+ */
+fun String.getBooleanByRegex(regexStr: String): Boolean {
+    return regexStr.toRegex(RegexOption.DOT_MATCHES_ALL)
+        .find(this)
+        ?.groupValues?.get(1)
+        ?.trim() // 去除首尾空格
+        ?.toBooleanStrict() == true
+}
