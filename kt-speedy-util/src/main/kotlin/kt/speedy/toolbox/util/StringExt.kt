@@ -445,12 +445,13 @@ fun String.containsAnyWord(words: Collection<String>): List<String> {
  * 替换最后一个匹配项
  */
 fun String.replaceLast(oldValue: String, newValue: String): String {
-    return if (this.lastOrNull()?.toString() == oldValue) {
-        this.substring(0, this.length - 1) + newValue
-    } else {
-        this
+    if (!this.endsWith(oldValue)) {
+        return this // 如果不是以 oldValue 结尾，直接返回原字符串
     }
+    val lastIndex = this.lastIndexOf(oldValue)
+    return this.substring(0, lastIndex) + newValue
 }
+
 
 /**
  * 批量将多个词替换成 1 个词

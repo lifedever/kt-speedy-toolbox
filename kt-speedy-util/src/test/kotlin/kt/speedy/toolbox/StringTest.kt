@@ -1,6 +1,7 @@
 package kt.speedy.toolbox
 
 import kt.speedy.toolbox.util.chunkedRealSizeByCharset
+import kt.speedy.toolbox.util.findBetween
 import kt.speedy.toolbox.util.ifNotPresentOrEqual
 import kotlin.test.Test
 
@@ -28,5 +29,12 @@ class StringTest {
             arr.forEachIndexed { index, s ->
                 println("【${index + 1}/${arr.size}】" + s)
             }
+    }
+
+    @Test
+    fun test3() {
+        val txt =
+            "关于本人于2025年02月23日与中国移动通信集团新疆有限公司".findBetween("关于本人于", "与中国移动通信集团", false)
+        println(txt)
     }
 }
