@@ -13,7 +13,7 @@ inline fun Boolean.ifTrue(block: () -> Unit) {
  * 如果为False，则执行
  */
 inline fun Boolean.ifFalse(block: () -> Unit) {
-    if (this) {
+    if (!this) {
         block()
     }
 }
