@@ -16,35 +16,35 @@ import java.util.*
 open class SupportModal : Serializable {
     @Id
     @Comment("主键")
-    var id: String? = null
+    open var id: String? = null
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_date")
     @Comment("创建时间")
-    var createdDate: Date? = null
+    open var createdDate: Date? = null
 
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_modified_date")
     @Comment("修改时间")
-    var lastModifiedDate: Date? = null
+    open var lastModifiedDate: Date? = null
 
     @Column(name = "created_by")
     @CreatedBy
     @Comment("创建人")
-    var createdBy: String? = null
+    open var createdBy: String? = null
 
     @Column(name = "last_modified_by")
     @LastModifiedBy
     @Comment("修改人")
-    var lastModifiedBy: String? = null
+    open var lastModifiedBy: String? = null
 
     /**
      *
      */
     @Comment("删除标识")
-    var deleted: Boolean? = false
+    open var deleted: Boolean? = false
 
     init {
         if (id == null) id = IdKit.get()
