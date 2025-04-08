@@ -59,6 +59,10 @@ abstract class SupportService<T : SupportModal, ID : Serializable> {
         return repository.findAll(spec, pageable)
     }
 
+    fun findAll(spec: Specification<T>, sort: Sort): List<T> {
+        return repository.findAll(spec, sort)
+    }
+
     fun findAll(pageable: Pageable): Page<T> {
         return repository.findAll(pageable)
     }
