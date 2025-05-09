@@ -16,9 +16,7 @@ fun File.tempUse(block: () -> Unit) {
  * 判断是否为图片
  */
 fun File.isImageFile(): Boolean {
-    val imageExtensions = listOf("jpg", "jpeg", "png", "gif", "bmp", "webp")
-    val extension = this.extension.lowercase()
-    return imageExtensions.contains(extension)
+    return this.name.isImage()
 }
 
 fun String.filterFiles(): Boolean {

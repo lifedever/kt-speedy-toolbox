@@ -677,3 +677,23 @@ fun String.getBooleanByRegex(regexStr: String): Boolean {
 fun String.containsAnyOf(vararg keywords: String, ignoreCase: Boolean = false): Boolean {
     return keywords.any { this.contains(it, ignoreCase) }
 }
+
+/**
+ * 是否为图像文件
+ */
+fun String.isImage(): Boolean {
+    val imageExtensions = listOf(
+        ".jpg", ".jpeg", ".png",
+        ".gif", ".bmp", ".webp",
+        ".svg", ".tiff", ".ico"
+    )
+
+    // 移除 URL 查询参数和片段标识符
+    val cleanPath = this
+        .substringBefore('?')
+        .substringBefore('#')
+        .trim()
+    return imageExtensions.any {
+        cleanPath.endsWith(it, ignoreCase = true)
+    }
+}
