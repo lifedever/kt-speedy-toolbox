@@ -71,7 +71,7 @@ fun String.findLine(startWith: String, removeStartWith: Boolean = false): String
 fun String.findLineAndRemoveChats(
     startWith: String,
     removeStartWith: Boolean = true,
-    removeChars: List<String> = listOf(":", "：")
+    removeChars: List<String> = listOf(":", "："),
 ): String? {
     var str = this.findLine(startWith, removeStartWith)
     str?.let {
@@ -255,7 +255,7 @@ inline fun String?.ifPresent(doIfPresent: (a: String) -> Unit) {
 fun String?.ifPresentOrElse(other: String): String {
     return if (this.isNotPresent()) {
         other
-    }else{
+    } else {
         this!!
     }
 }
@@ -696,4 +696,30 @@ fun String.isImage(): Boolean {
     return imageExtensions.any {
         cleanPath.endsWith(it, ignoreCase = true)
     }
+}
+
+/**
+ * 处理文件名
+ */
+fun String.sanitizeFileName(
+    replacement: String = "_",
+    removeConsecutiveReplacement: Boolean = true,
+    trim: Boolean = true,
+): String {
+    // 定义不允许在文件名中使用的字符
+    val invalidChars = Regex("""[\\/:*?"<>|\s]""")
+    var result = this.replace(invalidChars, replacement)
+
+    // 处理连续替换字符（如多个空格变成多个_）
+    if (removeConsecutiveReplacement && replacement.isNotEmpty()) {
+        val consecutiveReplacements = Regex(Regex.escape(replacement) + "+")
+        result = result.replace(consecutiveReplacements, replacement)
+    }
+
+    // 去除首尾空白和替换字符
+    if (trim) {
+        result = result.trim().trim { it.toString() == replacement }
+    }
+
+    return result
 }
