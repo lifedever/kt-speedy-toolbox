@@ -1,5 +1,7 @@
 package kt.speedy.toolbox.util
 
+import java.math.BigDecimal
+
 /**
  * 判断是否为空
  */
@@ -62,4 +64,24 @@ inline fun <T1, T2> ifBothNotNull(value1: T1?, value2: T2, block: (T1, T2) -> (U
     if (value1 != null && value2 != null) {
         block(value1, value2)
     }
+}
+
+/**
+ * 安全转换成Int
+ */
+fun Any.toSafeInt(): Int? = when (this) {
+    is BigDecimal -> this.intValueExact()
+    is Int -> this
+    else -> null
+}
+
+/**
+ * 安全转换成Double
+ */
+fun Any?.toSafeDouble(): Double? = when (this) {
+    is BigDecimal -> this.toDouble()
+    is Int -> this.toDouble()
+    is Long -> this.toDouble()
+    is Double -> this
+    else -> null
 }
