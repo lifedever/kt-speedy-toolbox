@@ -75,6 +75,8 @@ fun Any.toSafeInt(): Int? = when (this) {
     else -> null
 }
 
+fun Any.toSafeInt(default: Int): Int = this.toSafeInt() ?: default
+
 /**
  * 安全转换成Double
  */
@@ -85,3 +87,4 @@ fun Any?.toSafeDouble(): Double? = when (this) {
     is Double -> this
     else -> null
 }
+fun Any?.toSafeDouble(default: Double): Double = this.toSafeDouble() ?: default
